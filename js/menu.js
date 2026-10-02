@@ -7,12 +7,17 @@ document.addEventListener('DOMContentLoaded', function () {
     var overlay = menu.querySelector('.menu__overlay');
   
     function openMenu() {
+      if (menu.classList.contains('is-opened')) return;
       menu.classList.add('is-opened');
-      document.body.style.overflow = 'hidden';
+      // общий счётчик блокировки скролла из app.js (попапы + меню)
+      if (window.ttBodyLock) window.ttBodyLock(true);
+      else document.body.style.overflow = 'hidden';
     }
     function closeMenu() {
+      if (!menu.classList.contains('is-opened')) return;
       menu.classList.remove('is-opened');
-      document.body.style.overflow = '';
+      if (window.ttBodyLock) window.ttBodyLock(false);
+      else document.body.style.overflow = '';
     }
   
     if (burger)   burger.addEventListener('click', openMenu);
